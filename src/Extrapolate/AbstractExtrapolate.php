@@ -8,7 +8,10 @@
 
 namespace DevPledge\Integrations\Extrapolate;
 
-
+/**
+ * Class AbstractExtrapolate
+ * @package DevPledge\Integrations\Extrapolate
+ */
 abstract class AbstractExtrapolate {
 	/**
 	 * @var string
