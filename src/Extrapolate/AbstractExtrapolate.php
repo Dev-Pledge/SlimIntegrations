@@ -1,13 +1,14 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: johnsaunders
+ * Date: 26/03/2018
+ * Time: 23:48
+ */
 
 namespace DevPledge\Integrations\Extrapolate;
 
-use DevPledge\Integrations\Container\AbstractContainerCallable;
 
-/**
- * Class AbstractExtrapolate
- * @package DevPledge\Integrations\Extrapolator
- */
 abstract class AbstractExtrapolate {
 	/**
 	 * @var string
@@ -44,10 +45,10 @@ abstract class AbstractExtrapolate {
 					$class     = $this->nameSpace . '\\' . $className;
 					if ( $adapterClass = $this->getAdapterClass() ) {
 
-						$this->add( new $adapterClass( new $class ) );
+						$this->extrapolate( new $adapterClass( new $class ) );
 
 					} else {
-						$this->add( new $class() );
+						$this->extrapolate( new $class() );
 					}
 
 				}
@@ -58,7 +59,7 @@ abstract class AbstractExtrapolate {
 	/**
 	 * @param string $path
 	 *
-	 * @return AbstractExtrapolate
+	 * @return AbstractExtrapolateForContainer
 	 */
 	public function setPath( string $path ): AbstractExtrapolate {
 		$this->path = $path;
@@ -69,7 +70,7 @@ abstract class AbstractExtrapolate {
 	/**
 	 * @param string $nameSpace
 	 *
-	 * @return AbstractExtrapolate
+	 * @return AbstractExtrapolateForContainer
 	 */
 	public function setNameSpace( string $nameSpace ): AbstractExtrapolate {
 		$this->nameSpace = $nameSpace;
@@ -77,12 +78,17 @@ abstract class AbstractExtrapolate {
 		return $this;
 	}
 
-	abstract protected function add( AbstractContainerCallable $callable );
+	/**
+	 * @param callable $callable
+	 */
+	protected function extrapolate( callable $callable ) {
+		call_user_func( $callable );
+	}
 
 	/**
 	 * @param string | null $adapterClass
 	 *
-	 * @return AbstractExtrapolate
+	 * @return AbstractExtrapolateForContainer
 	 */
 	protected function setAdapterClass( string $adapterClass = null ) {
 		$this->adapterClass = $adapterClass;
@@ -100,5 +106,4 @@ abstract class AbstractExtrapolate {
 
 		return false;
 	}
-
 }
