@@ -1,4 +1,5 @@
 <?php
+
 namespace DevPledge\Integrations\Command;
 
 
@@ -25,11 +26,11 @@ abstract class AbstractCommandHandler extends AbstractContainerKey {
 	 *
 	 * @return mixed
 	 */
-	public function __invoke( AbstractCommand $command ){
-		$this->handle( $command);
+	public function __invoke( AbstractCommand $command ) {
+		return $this->handle( $command );
 	}
 
-	abstract protected function handle($command);
+	abstract protected function handle( $command );
 
 
 }

@@ -2,6 +2,7 @@
 
 namespace DevPledge\Integrations\Command;
 
+use PHPUnit\Runner\Exception;
 use Slim\Container;
 
 /**
@@ -16,13 +17,17 @@ class CommandBus {
 	/**
 	 * @param AbstractCommand $command
 	 *
-	 * @throws \Interop\Container\Exception\ContainerException
+	 * @throws CommandException
 	 */
 	public function handle( AbstractCommand $command ) {
 
 		$handlerClass = $this->getHandler( get_class( $command ) );
-		$handler      = new $handlerClass();
-		call_user_func_array( $handler, array( $command ) );
+		if ( $handlerClass ) {
+			$handler = new $handlerClass();
+			call_user_func_array( $handler, array( $command ) );
+		} else {
+			throw new CommandException( 'No command found for ' . get_class( $command ) );
+		}
 	}
 
 	/**

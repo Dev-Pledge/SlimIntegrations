@@ -1,11 +1,13 @@
 <?php
 namespace DevPledge\Integrations\Command;
+use DevPledge\Integrations\Extrapolate\AbstractExtrapolate;
+
 
 /**
  * Class ExtrapolateCommandHandlers
  * @package DevPledge\Integrations\Command
  */
-class ExtrapolateCommandHandlers extends AbstractExtrapolateForContainer {
+class ExtrapolateCommandHandlers extends AbstractExtrapolate {
 	/**
 	 * @param AbstractCommandHandler $commandHandler
 	 *
